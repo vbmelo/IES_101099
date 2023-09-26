@@ -14,6 +14,7 @@ public class WeatherStarter {
 
     public static void main(String[] args) {
         try {
+            // Configuração do Log4j2
             System.setProperty("log4j.configurationFile", "log4j2.xml");
 
             Retrofit retrofit = new Retrofit.Builder()
@@ -28,17 +29,14 @@ public class WeatherStarter {
             IpmaCityForecast forecast = apiResponse.body();
 
             if (forecast != null) {
-//                logger.info(info);
-
                 var listLength = forecast.getData().size();
-                System.out.println("Dias de Previsão do tempo Disponíveis: " + listLength + forecast.getData());
+                logger.info("Dias de Previsão do tempo Disponíveis: {}{}", listLength, forecast.getData());
 
                 for (CityForecast forecastItem : forecast.getData()) {
-                    System.out.printf("Data: %s%n", forecastItem.getForecastDate());
-                    System.out.printf("Temperatura máxima: %s%n", forecastItem.getTMax());
-                    System.out.printf("Temperatura mínima: %s%n", forecastItem.getTMin());
-                    System.out.printf("Precipitação: %s%n", forecastItem.getPrecipitaProb());
-                    System.out.println();
+                    logger.info("Data: {}", forecastItem.getForecastDate());
+                    logger.info("Temperatura máxima: {}", forecastItem.getTMax());
+                    logger.info("Temperatura mínima: {}", forecastItem.getTMin());
+                    logger.info("Precipitação: {}", forecastItem.getPrecipitaProb());
                 }
             } else {
                 logger.warn("No results for this request!");

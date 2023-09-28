@@ -1,11 +1,5 @@
 package org.example;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-
-import java.io.File;
-import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -17,10 +11,10 @@ public class ForecastRequestScheduler {
     private final List<Integer> availableCityIds = new ArrayList<>();
 
     public ForecastRequestScheduler() {
-        loadCityIdsFromJson();
+        initializeCityIds();
 
         Timer timer = new Timer();
-        int intervalInSeconds = 5;
+        int intervalInSeconds = 10;
         timer.scheduleAtFixedRate(new RequestTask(), 0, intervalInSeconds * 1000);
     }
 
@@ -35,20 +29,20 @@ public class ForecastRequestScheduler {
         }
     }
 
-    private void loadCityIdsFromJson() {
-        try {
-            File file = new File("src/main/resources/cities.json");
-            JsonParser parser = new JsonParser();
-            JsonObject jsonObject = parser.parse(new FileReader(file)).getAsJsonObject();
-            JsonArray cityIdsArray = jsonObject.getAsJsonArray("cityIds");
-
-            for (var cityIdElement : cityIdsArray) {
-                int cityId = cityIdElement.getAsInt();
-                availableCityIds.add(cityId);
-            }
-        } catch (Exception ex) {
-            System.err.println("Erro ao carregar IDs de cidade do JSON: " + ex.getMessage());
-        }
+    private void initializeCityIds() {
+        availableCityIds.add(1010500);
+        availableCityIds.add(1020500);
+        availableCityIds.add(1030300);
+        availableCityIds.add(1030800);
+        availableCityIds.add(1040200);
+        availableCityIds.add(1050200);
+        availableCityIds.add(1060300);
+        availableCityIds.add(107055);
+        availableCityIds.add(1080800);
+        availableCityIds.add(1081100);
+        availableCityIds.add(1081505);
+        availableCityIds.add(1090700);
+        availableCityIds.add(1090821);
     }
 
     public static void main(String[] args) {
